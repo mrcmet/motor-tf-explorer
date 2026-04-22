@@ -6,59 +6,56 @@
 <title>DC Motor Explorer</title>
 <style>
   :root {
-    --bg: #f5f4f0;
-    --card: #ffffff;
-    --surface: #eeeee8;
-    --border: rgba(0,0,0,0.09);
-    --border-s: rgba(0,0,0,0.16);
-    --text: #1a1a18;
-    --text-2: #555550;
-    --text-3: #8a8a82;
-    --blue: #1a6fc4;
-    --blue-l: #e6f0fa;
-    --green: #0f7a54;
-    --green-l: #e0f2ea;
-    --coral: #c04828;
-    --coral-l: #faece6;
-    --amber: #8a5a08;
-    --amber-l: #fef4dc;
-    --r: 10px;
-    --rs: 6px;
+    --bg:#f5f4f0;--card:#ffffff;--surface:#eeeee8;
+    --border:rgba(0,0,0,0.09);--border-s:rgba(0,0,0,0.16);
+    --text:#1a1a18;--text-2:#555550;--text-3:#8a8a82;
+    --blue:#1a6fc4;--blue-l:#e6f0fa;
+    --green:#0f7a54;--green-l:#e0f2ea;
+    --coral:#c04828;--coral-l:#faece6;
+    --amber:#8a5a08;--amber-l:#fef4dc;
+    --purple:#5040b0;--purple-l:#edeafc;
+    --r:10px;--rs:6px;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #141412;
-      --card: #1e1e1c;
-      --surface: #262624;
-      --border: rgba(255,255,255,0.08);
-      --border-s: rgba(255,255,255,0.16);
-      --text: #e4e4dc;
-      --text-2: #9a9a90;
-      --text-3: #666660;
-      --blue: #5ea4f0;
-      --blue-l: #101c2e;
-      --green: #48c48a;
-      --green-l: #0c1c16;
-      --coral: #f08060;
-      --coral-l: #201210;
-      --amber: #e8b830;
-      --amber-l: #1c1608;
+  @media(prefers-color-scheme:dark){
+    :root{
+      --bg:#141412;--card:#1e1e1c;--surface:#262624;
+      --border:rgba(255,255,255,0.08);--border-s:rgba(255,255,255,0.16);
+      --text:#e4e4dc;--text-2:#9a9a90;--text-3:#666660;
+      --blue:#5ea4f0;--blue-l:#101c2e;
+      --green:#48c48a;--green-l:#0c1c16;
+      --coral:#f08060;--coral-l:#201210;
+      --amber:#e8b830;--amber-l:#1c1608;
+      --purple:#9888ee;--purple-l:#161028;
     }
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5;}
 
-  header{background:var(--card);border-bottom:1px solid var(--border);padding:16px 20px;position:sticky;top:0;z-index:100;}
+  /* ── Header ── */
+  header{background:var(--card);border-bottom:1px solid var(--border);padding:14px 20px;position:sticky;top:0;z-index:100;}
   .hdr{max-width:740px;margin:0 auto;}
   h1{font-size:17px;font-weight:700;letter-spacing:-0.01em;}
   .hsub{font-size:12px;color:var(--text-2);margin-top:2px;}
 
+  /* ── Tab nav ── */
+  .tab-nav{background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:57px;z-index:90;}
+  .tab-nav::-webkit-scrollbar{display:none;}
+  .tab-nav-inner{max-width:740px;margin:0 auto;display:flex;}
+  .tab-btn{flex:1;padding:10px 12px;font-size:13px;font-weight:500;color:var(--text-2);border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;transition:all 0.15s;white-space:nowrap;text-align:center;}
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);}
+  .tab-pane{display:none;}
+  .tab-pane.active{display:block;}
+
+  /* ── Main ── */
   main{max-width:740px;margin:0 auto;padding:16px 14px 48px;}
 
+  /* ── Cards ── */
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px 18px 20px;margin-bottom:12px;}
   .card-t{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
   .card-s{font-size:13px;color:var(--text-2);line-height:1.55;margin-bottom:12px;}
 
+  /* ── Transfer function ── */
   .tf{background:var(--surface);border-radius:var(--rs);padding:14px;text-align:center;margin:10px 0 14px;}
   .tf-lab{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
   .tf-row{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
@@ -68,6 +65,7 @@
   .tf-bar{height:1.5px;background:var(--border-s);width:100%;}
   .tf-d{font-size:15px;color:var(--text);padding:4px 12px 0;white-space:nowrap;}
 
+  /* ── Sliders ── */
   .params{display:flex;flex-direction:column;gap:14px;margin:6px 0 10px;}
   .p-group{display:flex;flex-direction:column;gap:3px;}
   .p-top{display:flex;align-items:baseline;gap:8px;}
@@ -81,33 +79,54 @@
   input[type=range]{flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--border-s);border-radius:2px;outline:none;}
   input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.2);}
   input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--blue);cursor:pointer;border:none;}
+  .sec-m input[type=range]::-webkit-slider-thumb{background:var(--green);}
+  .sec-m input[type=range]::-moz-range-thumb{background:var(--green);}
 
+  /* ── Chips ── */
   .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0;}
-  @media(max-width:420px){.chips{grid-template-columns:1fr 1fr;} .chips4{grid-template-columns:1fr 1fr !important;}}
   .chips4{grid-template-columns:repeat(4,1fr);}
+  @media(max-width:420px){.chips,.chips4{grid-template-columns:1fr 1fr;}}
   .chip{background:var(--surface);border-radius:var(--rs);padding:8px 10px;text-align:center;}
   .chip-l{font-size:10px;color:var(--text-3);letter-spacing:0.03em;}
   .chip-v{font-size:14px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;margin-top:2px;}
 
+  /* ── Canvases ── */
   canvas{width:100%;height:170px;display:block;border-radius:var(--rs);margin-top:10px;}
   .cv-lab{font-size:11px;color:var(--text-3);text-align:center;margin-top:6px;}
 
+  /* ── Badge ── */
   .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;vertical-align:middle;margin-left:6px;}
   .b-under{background:var(--coral-l);color:var(--coral);}
   .b-crit{background:var(--green-l);color:var(--green);}
   .b-over{background:var(--blue-l);color:var(--blue);}
 
   .sep{height:1px;background:var(--border);margin:14px 0;}
-
   .sec-e .p-sym{color:var(--blue);}
   .sec-m .p-sym{color:var(--green);}
-  .sec-m input[type=range]::-webkit-slider-thumb{background:var(--green);}
-  .sec-m input[type=range]::-moz-range-thumb{background:var(--green);}
+
+  /* ── Tradeoffs tab ── */
+  .radar-wrap{width:100%;max-width:300px;margin:0 auto 20px;}
+  .radar-wrap canvas{width:100%!important;height:300px!important;}
+
+  .trow{margin-bottom:16px;}
+  .trow-head{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+  .trow-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .trow-name{font-size:13px;font-weight:700;color:var(--text);}
+  .trow-pct{margin-left:auto;font-size:12px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;min-width:34px;text-align:right;}
+  .trow-desc{font-size:12px;color:var(--text-3);line-height:1.5;margin-bottom:5px;}
+  .trow-drivers{font-size:11px;color:var(--text-3);margin-bottom:5px;}
+  .trow-bar-bg{height:10px;background:var(--surface);border-radius:5px;overflow:hidden;}
+  .trow-bar-fg{height:100%;border-radius:5px;transition:width 0.35s cubic-bezier(0.4,0,0.2,1);}
+
+  .sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
+  @media(max-width:380px){.sum-grid{grid-template-columns:1fr 1fr;}}
+  .sum-chip{border-radius:var(--rs);padding:12px 10px;text-align:center;background:var(--surface);}
+  .sum-l{font-size:10px;color:var(--text-3);}
+  .sum-v{font-size:20px;font-weight:700;margin-top:3px;}
 
   @media(max-width:480px){
     .card{padding:14px 14px 16px;}
-    .p-desc{padding-left:0;}
-    .p-slider{padding-left:0;}
+    .p-desc,.p-slider{padding-left:0;}
   }
 
   footer{text-align:center;font-size:11px;color:var(--text-3);padding:16px;border-top:1px solid var(--border);}
@@ -118,13 +137,23 @@
 <header>
   <div class="hdr">
     <h1>DC Motor Explorer</h1>
-    <div class="hsub">Adjust the physical parameters — observe how the motor responds</div>
+    <div class="hsub">Adjust the parameters — observe how design choices affect performance and cost</div>
   </div>
 </header>
 
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="showTab('dynamics')">Dynamics</button>
+    <button class="tab-btn" onclick="showTab('tradeoffs')">Design tradeoffs</button>
+  </div>
+</nav>
+
 <main>
 
-  <!-- GENERAL TF -->
+<!-- ══════════════════════════════════════ DYNAMICS TAB ══════════════════════════════════════ -->
+<div id="pane-dynamics" class="tab-pane active">
+
+  <!-- General TF -->
   <div class="card">
     <div class="card-t">General transfer function</div>
     <div class="card-s">A DC motor converts voltage to rotational speed. The general relationship between input voltage V(s) and output angular velocity Ω(s) is:</div>
@@ -142,11 +171,10 @@
     <div class="card-s" style="margin-bottom:0;">This combines the <strong>electrical dynamics</strong> of the armature circuit (R, L) with the <strong>mechanical dynamics</strong> of the rotating shaft (J, b), coupled through the motor constant K.</div>
   </div>
 
-  <!-- ELECTRICAL -->
+  <!-- Electrical -->
   <div class="card sec-e">
     <div class="card-t" style="color:var(--blue);">Electrical domain</div>
     <div class="card-s">The armature winding is a coil with resistance and inductance. When voltage is applied, current builds up through this coil to produce torque.</div>
-
     <div class="tf">
       <div class="tf-lab">Electrical transfer function</div>
       <div class="tf-row">
@@ -158,51 +186,31 @@
         </div>
       </div>
     </div>
-
     <div class="params">
       <div class="p-group">
-        <div class="p-top">
-          <div class="p-sym">R</div>
-          <div class="p-title">Armature resistance</div>
-          <div class="p-val" id="vR">2.0 Ω</div>
-        </div>
+        <div class="p-top"><div class="p-sym">R</div><div class="p-title">Armature resistance</div><div class="p-val" id="vR">2.0 Ω</div></div>
         <div class="p-desc">Resistance of the copper wire in the armature winding. A larger R limits the maximum current the motor can draw, reducing peak torque. Thicker wire lowers R but makes the motor heavier and bulkier.</div>
-        <div class="p-slider">
-          <span class="p-lo">0.5</span>
-          <input type="range" id="sR" min="0.5" max="10" step="0.1" value="2" oninput="calc()">
-          <span class="p-hi">10 Ω</span>
-        </div>
+        <div class="p-slider"><span class="p-lo">0.5</span><input type="range" id="sR" min="0.5" max="10" step="0.1" value="2" oninput="calc()"><span class="p-hi">10 Ω</span></div>
       </div>
       <div class="p-group">
-        <div class="p-top">
-          <div class="p-sym">L</div>
-          <div class="p-title">Armature inductance</div>
-          <div class="p-val" id="vL">0.10 H</div>
-        </div>
+        <div class="p-top"><div class="p-sym">L</div><div class="p-title">Armature inductance</div><div class="p-val" id="vL">0.10 H</div></div>
         <div class="p-desc">Inductance of the armature coil. A larger L means the coil resists rapid changes in current — it takes longer for current to build up or decay. More winding turns increase L and torque capability, but slow down the electrical response.</div>
-        <div class="p-slider">
-          <span class="p-lo">0.01</span>
-          <input type="range" id="sL" min="0.01" max="1" step="0.01" value="0.1" oninput="calc()">
-          <span class="p-hi">1.0 H</span>
-        </div>
+        <div class="p-slider"><span class="p-lo">0.01</span><input type="range" id="sL" min="0.01" max="1" step="0.01" value="0.1" oninput="calc()"><span class="p-hi">1.0 H</span></div>
       </div>
     </div>
-
     <div class="chips">
       <div class="chip"><div class="chip-l">Electrical pole</div><div class="chip-v" id="ePole">s = −20.0</div></div>
       <div class="chip"><div class="chip-l">Time constant τ_e</div><div class="chip-v" id="eTau">50 ms</div></div>
       <div class="chip"><div class="chip-l">Steady-state gain</div><div class="chip-v" id="eGain">0.500 A/V</div></div>
     </div>
-
     <canvas id="cvE" height="170"></canvas>
     <div class="cv-lab">Current i(t) after a step voltage is applied</div>
   </div>
 
-  <!-- MECHANICAL -->
+  <!-- Mechanical -->
   <div class="card sec-m">
     <div class="card-t" style="color:var(--green);">Mechanical domain</div>
     <div class="card-s">The rotor is a spinning mass with friction. When torque is applied by the armature current, the shaft accelerates until friction balances the driving torque.</div>
-
     <div class="tf">
       <div class="tf-lab">Mechanical transfer function</div>
       <div class="tf-row">
@@ -214,71 +222,43 @@
         </div>
       </div>
     </div>
-
     <div class="params">
       <div class="p-group">
-        <div class="p-top">
-          <div class="p-sym">J</div>
-          <div class="p-title">Moment of inertia</div>
-          <div class="p-val" id="vJ">0.010 kg·m²</div>
-        </div>
+        <div class="p-top"><div class="p-sym">J</div><div class="p-title">Moment of inertia</div><div class="p-val" id="vJ">0.010 kg·m²</div></div>
         <div class="p-desc">Moment of inertia of the rotating components (rotor, shaft, and anything attached to it). A larger J means a heavier rotor that resists changes in speed — it takes more torque and more time to spin up or slow down. Think of the difference between spinning a pencil vs. a bowling ball.</div>
-        <div class="p-slider">
-          <span class="p-lo">0.001</span>
-          <input type="range" id="sJ" min="0.001" max="0.5" step="0.001" value="0.01" oninput="calc()">
-          <span class="p-hi">0.5</span>
-        </div>
+        <div class="p-slider"><span class="p-lo">0.001</span><input type="range" id="sJ" min="0.001" max="0.5" step="0.001" value="0.01" oninput="calc()"><span class="p-hi">0.5</span></div>
       </div>
       <div class="p-group">
-        <div class="p-top">
-          <div class="p-sym">b</div>
-          <div class="p-title">Viscous damping</div>
-          <div class="p-val" id="vb">0.100 N·m·s</div>
-        </div>
+        <div class="p-top"><div class="p-sym">b</div><div class="p-title">Viscous damping</div><div class="p-val" id="vb">0.100 N·m·s</div></div>
         <div class="p-desc">Friction and drag opposing rotation. A larger b means more resistance to spinning — from bearing friction, air drag on the rotor, or the load attached to the motor. Higher damping limits top speed but helps the motor settle without oscillation.</div>
-        <div class="p-slider">
-          <span class="p-lo">0.001</span>
-          <input type="range" id="sb" min="0.001" max="0.5" step="0.001" value="0.1" oninput="calc()">
-          <span class="p-hi">0.5</span>
-        </div>
+        <div class="p-slider"><span class="p-lo">0.001</span><input type="range" id="sb" min="0.001" max="0.5" step="0.001" value="0.1" oninput="calc()"><span class="p-hi">0.5</span></div>
       </div>
     </div>
-
     <div class="chips">
       <div class="chip"><div class="chip-l">Mechanical pole</div><div class="chip-v" id="mPole">s = −10.0</div></div>
       <div class="chip"><div class="chip-l">Time constant τ_m</div><div class="chip-v" id="mTau">100 ms</div></div>
       <div class="chip"><div class="chip-l">Steady-state gain</div><div class="chip-v" id="mGain">10.0 rad/s per N·m</div></div>
     </div>
-
     <canvas id="cvM" height="170"></canvas>
     <div class="cv-lab">Angular velocity ω(t) after a step torque is applied</div>
   </div>
 
-  <!-- COUPLING CONSTANT -->
+  <!-- K coupling -->
   <div class="card">
     <div class="card-t" style="color:var(--amber);">The coupling constant</div>
     <div class="params">
       <div class="p-group">
-        <div class="p-top">
-          <div class="p-sym" style="color:var(--amber);">K</div>
-          <div class="p-title">Motor constant</div>
-          <div class="p-val" id="vK">0.50</div>
-        </div>
+        <div class="p-top"><div class="p-sym" style="color:var(--amber);">K</div><div class="p-title">Motor constant</div><div class="p-val" id="vK">0.50</div></div>
         <div class="p-desc">The motor constant links the electrical and mechanical domains. It sets both the torque produced per amp of current (T = K·i) and the back-EMF voltage generated per unit of rotational speed (V_emf = K·ω). A larger K means a stronger motor that produces more torque per amp — but it also generates more back-EMF, which acts like a brake and limits top speed at a given voltage. This single number is the bridge between the circuit and the shaft.</div>
-        <div class="p-slider">
-          <span class="p-lo">0.01</span>
-          <input type="range" id="sK" min="0.01" max="2" step="0.01" value="0.5" oninput="calc()">
-          <span class="p-hi">2.0</span>
-        </div>
+        <div class="p-slider"><span class="p-lo">0.01</span><input type="range" id="sK" min="0.01" max="2" step="0.01" value="0.5" oninput="calc()"><span class="p-hi">2.0</span></div>
       </div>
     </div>
   </div>
 
-  <!-- COMBINED -->
+  <!-- Combined -->
   <div class="card">
     <div class="card-t" style="color:var(--coral);">Combined system — voltage to speed</div>
     <div class="card-s">When both domains are coupled through K, the motor becomes a second-order system. The back-EMF feedback creates additional damping — the K² term in the denominator.</div>
-
     <div class="tf">
       <div class="tf-lab">Specific transfer function (with your values)</div>
       <div class="tf-row">
@@ -290,26 +270,127 @@
         </div>
       </div>
     </div>
-
     <div class="chips">
       <div class="chip"><div class="chip-l">No-load speed (DC gain)</div><div class="chip-v" id="cDC">—</div></div>
       <div class="chip"><div class="chip-l">Natural frequency ωₙ</div><div class="chip-v" id="cWn">—</div></div>
       <div class="chip"><div class="chip-l">Damping ratio ζ <span id="badge" class="badge b-crit">—</span></div><div class="chip-v" id="cZ">—</div></div>
     </div>
-
     <div class="sep"></div>
     <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Performance</div>
-
     <div class="chips chips4">
-      <div class="chip"><div class="chip-l">Rise time (10-90%)</div><div class="chip-v" id="pRise">—</div></div>
+      <div class="chip"><div class="chip-l">Rise time (10–90%)</div><div class="chip-v" id="pRise">—</div></div>
       <div class="chip"><div class="chip-l">Settling time (2%)</div><div class="chip-v" id="pSettle">—</div></div>
       <div class="chip"><div class="chip-l">Percent overshoot</div><div class="chip-v" id="pOS">—</div></div>
       <div class="chip"><div class="chip-l">Steady-state speed</div><div class="chip-v" id="pSS">—</div></div>
     </div>
-
     <canvas id="cvC" height="210"></canvas>
     <div class="cv-lab">Motor speed ω(t) after a step voltage is applied</div>
   </div>
+
+</div><!-- end pane-dynamics -->
+
+
+<!-- ══════════════════════════════════════ TRADEOFFS TAB ══════════════════════════════════════ -->
+<div id="pane-tradeoffs" class="tab-pane">
+
+  <div class="card">
+    <div class="card-t">Design tradeoffs</div>
+    <div class="card-s">Every parameter choice in a motor is a physical trade. Changing the sliders on the Dynamics tab updates these values — the same parameters, viewed through the lens of cost, size, and performance.</div>
+
+    <!-- Radar chart -->
+    <div class="radar-wrap">
+      <canvas id="cvRadar" height="300"></canvas>
+    </div>
+
+    <!-- Summary numbers -->
+    <div class="sum-grid">
+      <div class="sum-chip"><div class="sum-l">Relative cost</div><div class="sum-v" id="tCost" style="color:var(--coral);">—</div></div>
+      <div class="sum-chip"><div class="sum-l">Relative weight</div><div class="sum-v" id="tWeight" style="color:var(--text-2);">—</div></div>
+      <div class="sum-chip"><div class="sum-l">Stall torque</div><div class="sum-v" id="tTorque" style="color:var(--blue);">—</div></div>
+      <div class="sum-chip"><div class="sum-l">No-load speed</div><div class="sum-v" id="tSpeed" style="color:var(--green);">—</div></div>
+      <div class="sum-chip"><div class="sum-l">Response (settling)</div><div class="sum-v" id="tResponse" style="color:var(--amber);">—</div></div>
+      <div class="sum-chip"><div class="sum-l">Efficiency</div><div class="sum-v" id="tEff" style="color:var(--purple);">—</div></div>
+    </div>
+  </div>
+
+  <!-- Detail bars -->
+  <div class="card">
+    <div class="card-t" style="margin-bottom:14px;">What's driving each metric</div>
+
+    <!-- COST -->
+    <div class="trow">
+      <div class="trow-head">
+        <div class="trow-dot" style="background:var(--coral);"></div>
+        <div class="trow-name">Cost</div>
+        <div class="trow-pct" id="bCost">—</div>
+      </div>
+      <div class="trow-desc">Driven by material quantity and precision. Low R needs thick copper wire. High K needs strong magnets (often rare-earth). High L needs more winding turns. Low b (smooth, low-friction) requires precision bearings and tighter tolerances.</div>
+      <div class="trow-drivers" id="dCost"></div>
+      <div class="trow-bar-bg"><div class="trow-bar-fg" id="barCost" style="background:var(--coral);width:0%"></div></div>
+    </div>
+
+    <!-- WEIGHT -->
+    <div class="trow">
+      <div class="trow-head">
+        <div class="trow-dot" style="background:var(--text-2);"></div>
+        <div class="trow-name">Weight / size</div>
+        <div class="trow-pct" id="bWeight">—</div>
+      </div>
+      <div class="trow-desc">High J directly means a larger, heavier rotor. High L means more winding material — more copper wire wound on a bigger core. Low R also requires thicker wire, adding mass. These three parameters together determine how large and heavy the motor is.</div>
+      <div class="trow-drivers" id="dWeight"></div>
+      <div class="trow-bar-bg"><div class="trow-bar-fg" id="barWeight" style="background:var(--text-2);width:0%"></div></div>
+    </div>
+
+    <!-- TORQUE -->
+    <div class="trow">
+      <div class="trow-head">
+        <div class="trow-dot" style="background:var(--blue);"></div>
+        <div class="trow-name">Torque output</div>
+        <div class="trow-pct" id="bTorque">—</div>
+      </div>
+      <div class="trow-desc">Stall torque = K · V / R. A high K produces more torque per amp. A low R allows more current to flow, increasing torque further. These two parameters together set the motor's peak force capability. J and b do not affect stall torque directly.</div>
+      <div class="trow-drivers" id="dTorque"></div>
+      <div class="trow-bar-bg"><div class="trow-bar-fg" id="barTorque" style="background:var(--blue);width:0%"></div></div>
+    </div>
+
+    <!-- SPEED -->
+    <div class="trow">
+      <div class="trow-head">
+        <div class="trow-dot" style="background:var(--green);"></div>
+        <div class="trow-name">Top speed</div>
+        <div class="trow-pct" id="bSpeed">—</div>
+      </div>
+      <div class="trow-desc">No-load speed = K · V / (R·b + K²). A larger K increases torque but also generates more back-EMF, which acts as a self-imposed speed limit. Lower R and lower b both allow the motor to spin faster at a given voltage. There is a direct tension between high torque (high K) and high speed.</div>
+      <div class="trow-drivers" id="dSpeed"></div>
+      <div class="trow-bar-bg"><div class="trow-bar-fg" id="barSpeed" style="background:var(--green);width:0%"></div></div>
+    </div>
+
+    <!-- RESPONSE -->
+    <div class="trow">
+      <div class="trow-head">
+        <div class="trow-dot" style="background:var(--amber);"></div>
+        <div class="trow-name">Response speed</div>
+        <div class="trow-pct" id="bResponse">—</div>
+      </div>
+      <div class="trow-desc">How quickly the motor reaches its target speed. Governed by both time constants: τ_e = L/R (electrical) and τ_m = J/b (mechanical). A large J or large L slows the response. High R and high b speed it up — but at the cost of torque, efficiency, and top speed respectively.</div>
+      <div class="trow-drivers" id="dResponse"></div>
+      <div class="trow-bar-bg"><div class="trow-bar-fg" id="barResponse" style="background:var(--amber);width:0%"></div></div>
+    </div>
+
+    <!-- EFFICIENCY -->
+    <div class="trow">
+      <div class="trow-head">
+        <div class="trow-dot" style="background:var(--purple);"></div>
+        <div class="trow-name">Efficiency</div>
+        <div class="trow-pct" id="bEff">—</div>
+      </div>
+      <div class="trow-desc">The fraction of electrical input power converted to mechanical output at steady state. R dissipates energy as heat in the windings — the main loss mechanism. High K reduces the current needed for a given torque, lowering resistive losses. Low b reduces friction losses at the shaft.</div>
+      <div class="trow-drivers" id="dEff"></div>
+      <div class="trow-bar-bg"><div class="trow-bar-fg" id="barEff" style="background:var(--purple);width:0%"></div></div>
+    </div>
+
+  </div>
+</div><!-- end pane-tradeoffs -->
 
 </main>
 
@@ -319,6 +400,18 @@
 function g(id){return document.getElementById(id);}
 function gv(id){return parseFloat(g(id).value);}
 
+/* ── Tab switching ── */
+function showTab(name){
+  ['dynamics','tradeoffs'].forEach(t=>{
+    g('pane-'+t).classList.toggle('active',t===name);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active',['dynamics','tradeoffs'][i]===name);
+  });
+  if(name==='tradeoffs'){drawTradeoffs();drawRadar();}
+}
+
+/* ── Main calc ── */
 function calc(){
   const R=gv('sR'),L=gv('sL'),J=gv('sJ'),b=gv('sb'),K=gv('sK');
 
@@ -335,7 +428,7 @@ function calc(){
   g('eTau').textContent=fmtTime(tauE);
   g('eGain').textContent=(1/R).toFixed(3)+' A/V';
   const eDC=1/R;
-  plot('cvE',t=>eDC*(1-Math.exp(-t/tauE)),tauE*7,eDC*1.08,'#1a6fc4');
+  plot('cvE',t=>eDC*(1-Math.exp(-t/tauE)),2.0,2.2,'#1a6fc4',undefined,eDC);
 
   // Mechanical
   const tauM=J/b;
@@ -344,7 +437,9 @@ function calc(){
   g('mTau').textContent=fmtTime(tauM);
   g('mGain').textContent=(1/b).toFixed(1)+' rad/s per N·m';
   const mDC=1/b;
-  plot('cvM',t=>mDC*(1-Math.exp(-t/tauM)),tauM*7,mDC*1.08,'#0f7a54');
+  const mYmax=Math.max(22,mDC*1.08);
+  const mTmax=Math.max(2,tauM*5);
+  plot('cvM',t=>mDC*(1-Math.exp(-t/tauM)),Math.min(mTmax,10),Math.min(mYmax,1100),'#0f7a54',undefined,mDC);
 
   // Combined
   const a2=L*J,a1=L*b+R*J,a0=R*b+K*K;
@@ -360,18 +455,14 @@ function calc(){
   else if(z<1.1){bg.className='badge b-crit';bg.textContent='≈ critical';}
   else{bg.className='badge b-over';bg.textContent='overdamped';}
 
-  // Step response
+  // Step response function
   const tMax=Math.max(0.3,14/wn);
   let fn;
   if(z>=1){
     const sq=Math.sqrt(Math.max(0,z*z-1));
     const r1=-wn*(z-sq),r2=-wn*(z+sq);
-    if(Math.abs(r1-r2)<1e-8){
-      fn=t=>dc*(1-Math.exp(r1*t)*(1-r1*t));
-    }else{
-      const c1=dc*r2/(r2-r1),c2=dc*r1/(r1-r2);
-      fn=t=>dc-c1*Math.exp(r1*t)-c2*Math.exp(r2*t);
-    }
+    if(Math.abs(r1-r2)<1e-8){fn=t=>dc*(1-Math.exp(r1*t)*(1-r1*t));}
+    else{const c1=dc*r2/(r2-r1),c2=dc*r1/(r1-r2);fn=t=>dc-c1*Math.exp(r1*t)-c2*Math.exp(r2*t);}
   }else{
     const wd=wn*Math.sqrt(1-z*z);
     fn=t=>dc*(1-Math.exp(-z*wn*t)*(Math.cos(wd*t)+(z/Math.sqrt(1-z*z))*Math.sin(wd*t)));
@@ -400,12 +491,229 @@ function calc(){
   g('pSS').textContent=dc.toFixed(3)+' rad/s/V';
 
   const yTop=z<1?peakVal*1.12:dc*1.08;
-  plot('cvC',fn,tMax,yTop,'#c04828',dc);
+  plot('cvC',fn,tMax,yTop,'#c04828',undefined,dc);
+
+  // Update tradeoffs if that tab is visible
+  if(g('pane-tradeoffs').classList.contains('active')){
+    drawTradeoffs();drawRadar();
+  }
 }
 
-function fmtTime(v){return v<1?(v*1000).toFixed(0)+' ms':v.toFixed(2)+' s';}
+/* ── Tradeoff model ──
+   All scores 0–1, where 1 = most/best.
+   Cost: 1 = most expensive
+   Weight: 1 = heaviest
+   Torque: 1 = highest
+   Speed: 1 = fastest
+   Response: 1 = fastest response
+   Efficiency: 1 = most efficient
+*/
+function tradeoffScores(){
+  const R=gv('sR'),L=gv('sL'),J=gv('sJ'),b=gv('sb'),K=gv('sK');
 
-function plot(id,fn,tMax,yMax,color,ssLine){
+  // Parameter normalized positions within slider range (0=min, 1=max)
+  const nR=(R-0.5)/(10-0.5);        // high R = cheap thin wire
+  const nL=(L-0.01)/(1-0.01);       // high L = more windings = expensive/heavy
+  const nJ=(J-0.001)/(0.5-0.001);   // high J = heavier rotor
+  const nb=(b-0.001)/(0.5-0.001);   // high b = poor/cheap bearings (paradox: high b = cheaper but worse)
+  const nK=(K-0.01)/(2-0.01);       // high K = stronger magnets = expensive
+
+  // COST: expensive = low R (thick wire), high L (many turns), high K (strong magnets), low b (precision bearings)
+  const cost=clamp(0.35*(1-nR) + 0.20*nL + 0.30*nK + 0.15*(1-nb));
+
+  // WEIGHT: heavy = high J (big rotor), high L (more copper), low R (thicker wire)
+  const weight=clamp(0.50*nJ + 0.30*nL + 0.20*(1-nR));
+
+  // TORQUE: stall torque = K/R. Normalize against max (K=2, R=0.5 → 4) and min (K=0.01, R=10 → 0.001)
+  const stallRaw=K/R;
+  const stallNorm=clamp((Math.log(stallRaw)-Math.log(0.001))/(Math.log(4)-Math.log(0.001)));
+  const torque=stallNorm;
+
+  // SPEED: no-load ∝ K/(Rb+K²). Map log scale
+  const speedRaw=K/(R*b+K*K);
+  const speedNorm=clamp((Math.log(speedRaw+0.001)-Math.log(0.001))/(Math.log(4)-Math.log(0.001)));
+  const speed=speedNorm;
+
+  // RESPONSE: fast = low tau. Combined tau = tauE + tauM = L/R + J/b. Invert and normalize.
+  const tau=L/R + J/b;
+  // tau ranges roughly 0.003 (L=0.01,R=10,J=0.001,b=0.5) to ~502 (L=1,R=0.5,J=0.5,b=0.001)
+  const tauNorm=clamp((Math.log(tau+0.001)-Math.log(0.003))/(Math.log(502)-Math.log(0.003)));
+  const response=1-tauNorm; // fast response = high score
+
+  // EFFICIENCY: η ≈ K²/(K² + R·b) — fraction of voltage driving speed vs. lost in R
+  // This is the ratio of back-EMF power to total power at steady state
+  const effRaw=K*K/(K*K+R*b);
+  const efficiency=clamp(effRaw);
+
+  return {cost,weight,torque,speed,response,efficiency};
+}
+
+function clamp(v){return Math.max(0,Math.min(1,v));}
+
+function pct(v){return Math.round(v*100)+'%';}
+
+function driverText(contributions){
+  // contributions: [{label, value, positive}] — positive=true means "this is pushing the metric up"
+  return contributions
+    .sort((a,b)=>Math.abs(b.value)-Math.abs(a.value))
+    .map(c=>`<span style="font-size:11px;padding:1px 6px;border-radius:8px;font-weight:600;margin-right:3px;margin-bottom:2px;display:inline-block;background:${c.positive?'var(--blue-l)':'var(--surface)'};color:${c.positive?'var(--blue)':'var(--text-3)'}">${c.label} ${c.positive?'↑':'↓'}</span>`)
+    .join('');
+}
+
+function drawTradeoffs(){
+  const R=gv('sR'),L=gv('sL'),J=gv('sJ'),b=gv('sb'),K=gv('sK');
+  const s=tradeoffScores();
+
+  // Summary chips
+  g('tCost').textContent=pct(s.cost);
+  g('tWeight').textContent=pct(s.weight);
+  g('tTorque').textContent=pct(s.torque);
+  g('tSpeed').textContent=pct(s.speed);
+  g('tResponse').textContent=pct(s.response);
+  g('tEff').textContent=pct(s.efficiency);
+
+  // Bars
+  const bars=[
+    {id:'Cost',  v:s.cost},
+    {id:'Weight',v:s.weight},
+    {id:'Torque',v:s.torque},
+    {id:'Speed', v:s.speed},
+    {id:'Response',v:s.response},
+    {id:'Eff',   v:s.efficiency},
+  ];
+  bars.forEach(({id,v})=>{
+    g('bar'+id).style.width=pct(v);
+    g('b'+id).textContent=pct(v);
+  });
+
+  // Driver tags
+  const nR=(R-0.5)/9.5,nL=(L-0.01)/0.99,nJ=(J-0.001)/0.499,nb=(b-0.001)/0.499,nK=(K-0.01)/1.99;
+
+  g('dCost').innerHTML=driverText([
+    {label:'R',  value:1-nR, positive:nR<0.5},
+    {label:'K',  value:nK,   positive:nK>0.5},
+    {label:'L',  value:nL,   positive:nL>0.5},
+    {label:'b',  value:1-nb, positive:nb<0.5},
+  ]);
+  g('dWeight').innerHTML=driverText([
+    {label:'J',  value:nJ,   positive:nJ>0.5},
+    {label:'L',  value:nL,   positive:nL>0.5},
+    {label:'R',  value:1-nR, positive:nR<0.5},
+  ]);
+  g('dTorque').innerHTML=driverText([
+    {label:'K',  value:nK,   positive:nK>0.5},
+    {label:'R',  value:1-nR, positive:nR<0.5},
+  ]);
+  g('dSpeed').innerHTML=driverText([
+    {label:'R',  value:1-nR, positive:nR<0.5},
+    {label:'b',  value:1-nb, positive:nb<0.5},
+    {label:'K',  value:nK,   positive:nK>0.5},
+  ]);
+  g('dResponse').innerHTML=driverText([
+    {label:'J',  value:nJ,   positive:nJ<0.3},
+    {label:'L',  value:nL,   positive:nL<0.3},
+    {label:'b',  value:nb,   positive:nb>0.5},
+    {label:'R',  value:nR,   positive:nR>0.5},
+  ]);
+  g('dEff').innerHTML=driverText([
+    {label:'K',  value:nK,   positive:nK>0.5},
+    {label:'R',  value:1-nR, positive:nR<0.5},
+    {label:'b',  value:1-nb, positive:nb<0.3},
+  ]);
+}
+
+/* ── Radar chart ── */
+function drawRadar(){
+  const cv=g('cvRadar');if(!cv)return;
+  const dpr=window.devicePixelRatio||1;
+  const size=cv.clientWidth||280;
+  cv.width=size*dpr;cv.height=size*dpr;
+  const ctx=cv.getContext('2d');
+  ctx.scale(dpr,dpr);
+
+  const W=size,H=size;
+  const cx=W/2,cy=H/2;
+  const maxR=Math.min(W,H)*0.38;
+
+  const dk=matchMedia('(prefers-color-scheme:dark)').matches;
+  const gridC=dk?'rgba(255,255,255,0.08)':'rgba(0,0,0,0.08)';
+  const txtC=dk?'rgba(255,255,255,0.55)':'rgba(0,0,0,0.5)';
+
+  const s=tradeoffScores();
+  const labels=['Cost','Weight','Torque','Speed','Response','Efficiency'];
+  const values=[s.cost,s.weight,s.torque,s.speed,s.response,s.efficiency];
+  const colors=['#c04828','#888888','#1a6fc4','#0f7a54','#8a5a08','#5040b0'];
+  const n=labels.length;
+
+  ctx.clearRect(0,0,W,H);
+
+  // Grid rings
+  [0.25,0.5,0.75,1.0].forEach(r=>{
+    ctx.beginPath();
+    for(let i=0;i<n;i++){
+      const a=i*2*Math.PI/n - Math.PI/2;
+      const x=cx+Math.cos(a)*maxR*r;
+      const y=cy+Math.sin(a)*maxR*r;
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle=gridC;ctx.lineWidth=0.5+(r===1?0.5:0);ctx.stroke();
+  });
+
+  // Spokes
+  for(let i=0;i<n;i++){
+    const a=i*2*Math.PI/n - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(a)*maxR,cy+Math.sin(a)*maxR);
+    ctx.strokeStyle=gridC;ctx.lineWidth=0.5;ctx.stroke();
+  }
+
+  // Fill polygon
+  ctx.beginPath();
+  for(let i=0;i<n;i++){
+    const a=i*2*Math.PI/n - Math.PI/2;
+    const r=values[i]*maxR;
+    const x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle=dk?'rgba(90,130,220,0.18)':'rgba(26,111,196,0.10)';ctx.fill();
+  ctx.strokeStyle=dk?'rgba(90,160,240,0.7)':'rgba(26,111,196,0.6)';ctx.lineWidth=1.5;ctx.stroke();
+
+  // Dots on each axis
+  for(let i=0;i<n;i++){
+    const a=i*2*Math.PI/n - Math.PI/2;
+    const r=values[i]*maxR;
+    const x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;
+    ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle=colors[i];ctx.fill();
+  }
+
+  // Labels
+  ctx.font=`${Math.round(size*0.048)}px -apple-system,system-ui,sans-serif`;
+  ctx.textAlign='center';
+  for(let i=0;i<n;i++){
+    const a=i*2*Math.PI/n - Math.PI/2;
+    const lr=maxR+22;
+    const x=cx+Math.cos(a)*lr,y=cy+Math.sin(a)*lr;
+    const pctStr=Math.round(values[i]*100)+'%';
+
+    // Label
+    ctx.fillStyle=colors[i];
+    ctx.font=`600 ${Math.round(size*0.044)}px -apple-system,system-ui,sans-serif`;
+    const lineH=size*0.052;
+    ctx.fillText(labels[i],x,y- lineH*0.3);
+
+    // Percentage
+    ctx.fillStyle=txtC;
+    ctx.font=`${Math.round(size*0.042)}px -apple-system,system-ui,sans-serif`;
+    ctx.fillText(pctStr,x,y+lineH*0.85);
+  }
+}
+
+/* ── Step response plot ── */
+function plot(id,fn,tMax,yMax,color,_u,ssLine){
   const cv=g(id);if(!cv)return;
   const dpr=window.devicePixelRatio||1;
   const W=cv.clientWidth||600,H=cv.clientHeight||170;
@@ -420,25 +728,23 @@ function plot(id,fn,tMax,yMax,color,ssLine){
 
   const p={l:50,r:14,t:16,b:30};
   const gW=W-p.l-p.r,gH=H-p.t-p.b;
-
   ctx.clearRect(0,0,W,H);
 
-  // Grid
   ctx.strokeStyle=gridC;ctx.lineWidth=0.5;
   for(let i=0;i<=4;i++){const y=p.t+gH*i/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(W-p.r,y);ctx.stroke();}
   for(let i=0;i<=5;i++){const x=p.l+gW*i/5;ctx.beginPath();ctx.moveTo(x,p.t);ctx.lineTo(x,p.t+gH);ctx.stroke();}
 
-  // Steady-state dashed line
   if(ssLine!==undefined){
     const ssY=p.t+gH*(1-ssLine/yMax);
-    ctx.strokeStyle=ssC;ctx.setLineDash([5,4]);ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(p.l,ssY);ctx.lineTo(W-p.r,ssY);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle=txtC;ctx.font='10px system-ui';ctx.textAlign='right';
-    ctx.fillText('steady state',W-p.r-4,ssY-5);
+    if(ssY>p.t-5&&ssY<p.t+gH+5){
+      ctx.strokeStyle=ssC;ctx.setLineDash([5,4]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(p.l,ssY);ctx.lineTo(W-p.r,ssY);ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle=txtC;ctx.font='10px system-ui';ctx.textAlign='right';
+      ctx.fillText('steady state = '+fmtNum(ssLine),W-p.r-4,Math.max(ssY-5,p.t+10));
+    }
   }
 
-  // Curve
   ctx.strokeStyle=color;ctx.lineWidth=2.2;ctx.lineJoin='round';
   ctx.beginPath();
   const N=500;
@@ -449,33 +755,30 @@ function plot(id,fn,tMax,yMax,color,ssLine){
   }
   ctx.stroke();
 
-  // Area fill under curve
-  ctx.lineTo(p.l+gW,p.t+gH);
-  ctx.lineTo(p.l,p.t+gH);
-  ctx.closePath();
+  ctx.lineTo(p.l+gW,p.t+gH);ctx.lineTo(p.l,p.t+gH);ctx.closePath();
   const fc=dk?color.replace(')',',0.12)'):'rgba('+hexToRgb(color)+',0.07)';
-  ctx.fillStyle=fc;
-  ctx.fill();
+  ctx.fillStyle=fc;ctx.fill();
 
-  // Axes
   ctx.fillStyle=txtC;ctx.font='10px system-ui';
   ctx.textAlign='right';
-  ctx.fillText(yMax<1?yMax.toFixed(3):yMax.toFixed(1),p.l-5,p.t+5);
+  ctx.fillText(fmtNum(yMax),p.l-5,p.t+5);
+  ctx.fillText(fmtNum(yMax/2),p.l-5,p.t+gH/2+4);
   ctx.fillText('0',p.l-5,p.t+gH+4);
   ctx.textAlign='center';
   ctx.fillText('0',p.l,p.t+gH+16);
-  const mid=tMax/2;
-  ctx.fillText(fmtTime(mid),p.l+gW/2,p.t+gH+16);
+  ctx.fillText(fmtTime(tMax/2),p.l+gW/2,p.t+gH+16);
   ctx.fillText(fmtTime(tMax),W-p.r,p.t+gH+16);
 }
 
-function hexToRgb(h){
-  const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);
-  return r+','+g+','+b;
-}
+function fmtTime(v){return v<1?(v*1000).toFixed(0)+' ms':v.toFixed(2)+' s';}
+function fmtNum(v){return v>=100?Math.round(v).toString():v>=10?v.toFixed(1):v>=1?v.toFixed(1):v.toFixed(2);}
+function hexToRgb(h){const r=parseInt(h.slice(1,3),16),gg=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return r+','+gg+','+b;}
 
 calc();
-window.addEventListener('resize',calc);
+window.addEventListener('resize',()=>{
+  calc();
+  if(g('pane-tradeoffs').classList.contains('active')){drawRadar();}
+});
 </script>
 
 </body>
